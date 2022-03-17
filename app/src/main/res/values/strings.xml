@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SlideShowApp</string>
+    <string name="inner_memory">Внутренняя память</string>
+    <string name="sd_card">Внешние хранилища</string>
+</resources>
