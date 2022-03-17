@@ -9,6 +9,7 @@ import com.example.slideshowapp.model.presenters.viewmodel.injection.InterfaceMo
 import com.example.slideshowapp.model.presenters.viewmodel.injection.ViewModelModule
 import com.example.slideshowapp.model.ui.activity.BaseActivity
 import com.example.slideshowapp.model.ui.fragment.HomeFragment
+import com.example.slideshowapp.model.ui.fragment.SettingFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -33,5 +34,6 @@ class App : Application() {
     interface AppComponent {
         fun inject (fragment: HomeFragment)
         fun inject(activity: BaseActivity)
+        fun inject (fragment: SettingFragment)
     }
 }
