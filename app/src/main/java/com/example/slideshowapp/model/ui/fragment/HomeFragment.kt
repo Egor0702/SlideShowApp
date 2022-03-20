@@ -1,5 +1,7 @@
 package com.example.slideshowapp.model.ui.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +18,7 @@ import com.example.slideshowapp.domain.None
 import com.example.slideshowapp.model.presenters.viewmodel.ViewModelPhoto
 import com.example.slideshowapp.model.ui.App
 import com.example.slideshowapp.model.ui.PermissionManager
+import com.example.slideshowapp.model.ui.PermissionManager.Companion.REQUEST_CODE
 import com.example.slideshowapp.model.ui.onFailure
 import com.example.slideshowapp.model.ui.onSuccess
 import javax.inject.Inject
@@ -36,7 +39,7 @@ class HomeFragment : BaseFragment() {
             onSuccess(currentPhoto, ::updateScreen)
             onFailure(failure, ::onFailureFragment)
         }
-        viewModelPhoto.getListPhoto()
+
     }
 
     override fun onCreateView(
@@ -51,7 +54,9 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-           showPermission()
+        base {
+            permissionManager.request(this,this,viewModelPhoto)
+        }
 
     }
     private fun updateScreen(image : Uri?) {
@@ -70,10 +75,14 @@ class HomeFragment : BaseFragment() {
         viewModelPhoto.setImageOnScreen()
 
     }
+    override fun onRequestPermissionsResult(requestCode:Int, permissions : Array<String>, grantResults: IntArray){
 
-    fun showPermission() {
-        base {
-            permissionManager.getPermission(this, this)
+                viewModelPhoto.getListPhoto()
+
         }
     }
-    }
+
+
+
+
+

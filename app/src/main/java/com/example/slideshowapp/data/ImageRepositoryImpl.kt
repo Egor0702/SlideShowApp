@@ -15,41 +15,27 @@ import javax.inject.Inject
 class ImageRepositoryImpl @Inject constructor(private val context: Context,
                                               private val sharPref: SharedPreferencesManager) : ImageRepository{
     override suspend fun getImageList(): List<Uri> {
-        Log.d("Eg", "ImageRepositoryImpl getImageList()")
         val uriExternal: Uri? = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val uriInternal: Uri? = MediaStore.Images.Media.INTERNAL_CONTENT_URI
         val projection: Array<String> = arrayOf("_data")
         var cursorExternal: Cursor? = null
-        var cursorInternal: Cursor? = null
         //var directories: Array<String?>? = null
         val dirList: SortedSet<String> = TreeSet<String>()
 
-        if (uriExternal != null && uriInternal != null) {
-            Log.d("Eg", "(uriExternal != null && uriInternal != null) = ${(uriExternal != null && uriInternal != null)}")
+        if (uriExternal != null) {
             cursorExternal = context.contentResolver.query(uriExternal, projection, null, null, null)
-            cursorInternal = context.contentResolver.query(uriInternal,projection,null,null,null)
         }
 
         if (cursorExternal != null && cursorExternal.moveToFirst()) {
-            Log.d("Eg", "(cursorExternal != null && cursorExternal.moveToFirst()) = ${(cursorExternal != null && cursorExternal.moveToFirst())}")
+            Log.d("Eg", "А надо?")
             while (cursorExternal.moveToNext()) {
                 var tempDir: String = cursorExternal.getString(0).substringBeforeLast("/")
                 dirList.add(tempDir)
             }
         }
-        if (cursorInternal != null && cursorInternal.moveToFirst()) {
-            Log.d("Eg", "(cursorInternal != null && cursorInternal.moveToFirst()) = ${(cursorInternal != null && cursorInternal.moveToFirst())}")
-            while (cursorInternal.moveToNext()) {
-                var tempDir: String = cursorInternal.getString(0).substringBeforeLast("/")
-                Log.d("Eg", "tempDir = ${tempDir}")
-                dirList.add(tempDir)
-            }
-        }
-        Log.d("Eg", "tempDir size: ${dirList.size}")
+
         val resultIAV: List<Uri> = getPath(dirList)
         cursorExternal?.close()
-        cursorInternal?.close()
-        Log.d("Eg", "resultIAV : ${resultIAV.lastOrNull()}")
         return resultIAV
     }
 
@@ -90,7 +76,8 @@ class ImageRepositoryImpl @Inject constructor(private val context: Context,
 
             var imageResult: Uri? = null
             delay(sharPref.getTime())
-            if ((listImage?.indexOf(currentImage) == listImage?.size) || (listImage!!.indexOf(currentImage) > listImage!!.size)) {
+            if (((listImage?.indexOf(currentImage)) == (listImage?.size?.minus(1))) || (listImage!!.indexOf(currentImage) > (listImage!!.size-1))
+                    || (listImage?.indexOf((listImage.indexOf(currentImage) + 1)) == (listImage?.size?.minus(1)))) {
                 imageResult = listImage?.get(0)
             } else {
                 imageResult = listImage?.get((listImage.indexOf(currentImage) + 1))

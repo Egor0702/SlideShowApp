@@ -2,6 +2,7 @@ package com.example.slideshowapp.model.ui
 
 import android.app.Activity
 import android.app.Application
+import com.example.slideshowapp.data.service.SlideShowService
 import com.example.slideshowapp.domain.usecase.GetListPhoto
 import com.example.slideshowapp.model.presenters.viewmodel.ViewModelPhoto
 import com.example.slideshowapp.model.presenters.viewmodel.injection.AppModule
@@ -35,5 +36,6 @@ class App : Application() {
         fun inject (fragment: HomeFragment)
         fun inject(activity: BaseActivity)
         fun inject (fragment: SettingFragment)
+        fun inject(service: SlideShowService)
     }
 }

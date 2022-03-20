@@ -30,6 +30,7 @@ abstract class BaseActivity : AppCompatActivity(){
         App.appComponent.inject(this)
         setContent()
         addFragment(savedInstanceState)
+
     }
     open fun setContent(){
         setContentView(contentView)
@@ -49,4 +50,10 @@ abstract class BaseActivity : AppCompatActivity(){
         return vm
     }
     inline fun Activity?.base(block: BaseActivity.() -> Unit) = (this as? BaseActivity)?.let(block)
+
+    open fun finishWork(){
+        finishAndRemoveTask()
+        System.exit(0)
+        finish()
+    }
 }

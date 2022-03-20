@@ -28,7 +28,7 @@
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:min = "1"
         android:max = "60"
@@ -72,5 +72,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTimePicker2" />
 
+        <Button
+            android:id="@+id/saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "Сохранить"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timePick2"
+            />
 </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
